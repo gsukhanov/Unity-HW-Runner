@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelBehavior
   levelPrefab: {fileID: 2687899349899869273}
+  levelLength: 1000
 --- !u!1 &3546385261118058453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +1010,6 @@ GameObject:
   - component: {fileID: 2577094389816332605}
   - component: {fileID: 5154642327486532184}
   - component: {fileID: 6059483952543744330}
-  - component: {fileID: 7006208483137461963}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -1089,27 +1089,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7006208483137461963
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8761470491914020620}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9070960228442542628
 GameObject:
   m_ObjectHideFlags: 0

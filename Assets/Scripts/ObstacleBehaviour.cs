@@ -4,7 +4,15 @@ public class ObstacleBehaviour : MonoBehaviour
 {
     GameObject shade;
 
-    [SerializeField] ObstacleStats stats;
+    private float damage;
+
+    public float getDamage() {
+        return damage;
+    }
+
+    public void setDamage(float value) {
+        damage = value;
+    }
 
     void Start()
     {
@@ -18,9 +26,4 @@ public class ObstacleBehaviour : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     collision.gameObject.
-    // }
 }

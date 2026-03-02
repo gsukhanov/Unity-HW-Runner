@@ -2,11 +2,18 @@ using UnityEngine;
 
 public class LevelForwardMovement : MonoBehaviour
 {
-    float speed = 1f;
+    [SerializeField] GameSettings gameSettings;
+    float speed;
+    float delta;
+    void Start()
+    {
+        speed = gameSettings.startingSpeed;
+        delta = (gameSettings.maxSpeed - gameSettings.startingSpeed) / (gameSettings.maxSpeedReachTime / Time.deltaTime);
+    }
     void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        if (speed < 10) speed += 0.004f;
-        else speed = 10;
+        if (speed < gameSettings.maxSpeed) speed += delta;
+        else speed = gameSettings.maxSpeed;
     }
 }

@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
-    float speed = 1f;
+    [SerializeField] GameSettings gameSettings;
+    private float speed;
+    private float exponent;
     bool slowing = false;
     bool halt = false;
     GameObject player;
@@ -11,6 +13,8 @@ public class CameraBehavior : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Shade");
+        speed = gameSettings.startingSpeed;
+        exponent = (float)System.Math.Pow(gameSettings.maxSpeed / gameSettings.startingSpeed, 1 / (gameSettings.maxSpeedReachTime / Time.deltaTime));
     }
 
     // Update is called once per frame
@@ -18,19 +22,19 @@ public class CameraBehavior : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
         if (!halt) {
-            if (speed < 10) speed *= 1.0007f;
+            if (speed < gameSettings.maxSpeed) speed *= exponent;
             else if (Vector3.Distance(transform.position, player.transform.position) > 9f)
             {
-                if (slowing) speed *= 0.9997f;
+                if (slowing) speed *= 1 / exponent;
                 else
                 {
-                    speed *= 1.0007f;
-                    if (speed > 18f) slowing = true;
+                    speed *= exponent;
+                    if (speed > 1.8f * gameSettings.maxSpeed) slowing = true;
                 }
             }
             else {
                 halt = true;
-                speed = 10;
+                speed = gameSettings.maxSpeed;
             }
         } 
     }

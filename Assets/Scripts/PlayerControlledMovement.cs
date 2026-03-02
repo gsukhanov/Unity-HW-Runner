@@ -1,14 +1,9 @@
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public class PlayerControlledMovement : MonoBehaviour
 {   
-
-    PlayerController controller;
+    [SerializeField] GameSettings gameSettings;
     private float EPSILON = 0.001f;
     int pos = 0;
     private bool isJumping = false;
@@ -27,8 +22,6 @@ public class PlayerControlledMovement : MonoBehaviour
             }
         }
     }
-    [SerializeField] float jumpHeight = 5f;
-    [SerializeField] float gravity = 10f;
     private float jumpSpeed;
     float currentVerticalSpeed = 0;
     float defaultVerticalPosition;
@@ -36,9 +29,14 @@ public class PlayerControlledMovement : MonoBehaviour
     void Start()
     {
         defaultVerticalPosition = transform.position.y;
-        jumpSpeed = (float)System.Math.Pow(jumpHeight * 2 * gravity, 0.5);
+        {
+            
+            float jumpParam = gameSettings.jumpHeight * 2 * gameSettings.gravity;
+            
+            jumpSpeed = (float)System.Math.Pow(jumpParam, 0.5);
+        }
     }
-    void OnJump()
+    public void OnJump()
     {
         if (!isJumping) {
             isJumping = true;
@@ -51,7 +49,7 @@ public class PlayerControlledMovement : MonoBehaviour
         if (isJumping)
         {
             transform.Translate(0f, currentVerticalSpeed * Time.deltaTime, 0f);
-            currentVerticalSpeed -= gravity * Time.deltaTime;
+            currentVerticalSpeed -= gameSettings.gravity * Time.deltaTime;
         }
         if (transform.position.y < defaultVerticalPosition + EPSILON)
         {
