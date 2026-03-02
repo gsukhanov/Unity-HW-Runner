@@ -19,5 +19,7 @@ public class GameSettings : ScriptableObject
     [SerializeField] public float mediumObstacleDamage = 10f;
     [Tooltip("Frequency of obstacle spawns per second")]
     [SerializeField] public float obstacleFrequency = 0.2f;
+    [Tooltip("Maximum obstacle height")]
+    [SerializeField] public float maxObstacleHeight = 0.2f;
 
 }
