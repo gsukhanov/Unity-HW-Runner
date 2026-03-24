@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28092d88a29b250418ebac37989e7319, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: Assembly-CSharp::GameSettings
-  jumpHeight: 5
+  playerMaxHealth: 100
+  jumpHeight: 3
   gravity: 10
   startingSpeed: 1
-  maxSpeed: 1
-  maxSpeedReachTime: 1
+  maxSpeed: 10
+  maxSpeedReachTime: 20
   mediumObstacleDamage: 10
+  obstacleFrequency: 1
+  maxObstacleHeight: 2.5
+  powerupChance: 0.7
+  powerupDuration: 15
+  speedBuffScale: 2
+  healthBuffSize: 25
+  jumpBuffHeight: 2

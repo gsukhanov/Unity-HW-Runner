@@ -5,11 +5,6 @@ public class ObstacleBehaviour : MonoBehaviour
     GameObject shade;
 
     private float damage;
-
-    public float getDamage() {
-        return damage;
-    }
-
     public void setDamage(float value) {
         damage = value;
     }
@@ -23,6 +18,16 @@ public class ObstacleBehaviour : MonoBehaviour
     {
         if (Vector3.Distance(shade.transform.position, transform.position) > 20f)
         {
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            playerController.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

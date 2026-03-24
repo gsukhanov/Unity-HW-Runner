@@ -1,12 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameSettings gameSettings;
-    Button restartButton;
 
-    float currentHealth = 100;
+    public UnityEvent onDeath;
+
+    float currentHealth;
     public float getHealth() {
         return currentHealth;
     }
@@ -14,22 +15,72 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Canvas canvas = FindFirstObjectByType<Canvas>();
-        restartButton = canvas.GetComponentInChildren<Button>(true);
         currentHealth = gameSettings.playerMaxHealth;
+        onDeath.AddListener(Die);
+        onDeath.AddListener(RemoveSpeedBuff);
+        onDeath.AddListener(RemoveJumpBuff);
     }
 
-    // Update is called once per frame
-
-    public void OnTriggerEnter(Collider collider)
+    public void TakeDamage(float damage)
     {
-        GameObject obstacle = collider.gameObject;
-        currentHealth -= obstacle.GetComponent<ObstacleBehaviour>().getDamage();
-        Destroy(obstacle);
+        currentHealth -= damage;
         if (currentHealth < 0)
         {
-            restartButton.gameObject.SetActive(true);
-            Destroy(gameObject);
+            onDeath.Invoke();
         }
+    }
+
+
+    float speedBuffRemainingTime = 0f;
+    public bool speedIsBuffed = false;
+    public void GetSpeedBuff()
+    {
+        speedBuffRemainingTime += gameSettings.powerupDuration;
+        if (!speedIsBuffed) speedIsBuffed = true;
+    }
+    public void RemoveSpeedBuff()
+    {
+        speedIsBuffed = false;
+        speedBuffRemainingTime = 0f;
+    }
+    public void GetHealthBuff()
+    {
+        currentHealth += gameSettings.healthBuffSize;
+    }
+    float jumpBuffRemainingTime = 0f;
+    public bool jumpIsBuffed = false;
+    public void GetJumpBuff()
+    {
+        jumpBuffRemainingTime += gameSettings.powerupDuration;
+        if (!jumpIsBuffed) jumpIsBuffed = true;
+    }
+    public void RemoveJumpBuff()
+    {
+        jumpIsBuffed = false;
+        jumpBuffRemainingTime = 0f;
+    }
+
+    public void Update()
+    {
+        if (speedBuffRemainingTime > 0f) {
+            speedBuffRemainingTime -= Time.deltaTime;
+            if (speedBuffRemainingTime <= 0f)
+            {
+                RemoveSpeedBuff();
+            }    
+        }
+        if (jumpBuffRemainingTime > 0f) {
+            speedBuffRemainingTime -= Time.deltaTime;
+            if (jumpBuffRemainingTime <= 0f)
+            {
+                RemoveJumpBuff();
+            }    
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
 }

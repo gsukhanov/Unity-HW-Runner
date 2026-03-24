@@ -7,10 +7,12 @@ public class PlayerControlledMovement : MonoBehaviour
     private float EPSILON = 0.001f;
     int pos = 0;
     private bool isJumping = false;
+
+    PlayerController playerController;
     public void OnMove(InputValue value)
     {
         var v = value.Get<Vector2>();
-        if (!isJumping) {
+        if (!isJumping || playerController.jumpIsBuffed) {
             if (v[0] < 0 && pos >= 0) {
                 transform.Translate(-4f, 0, 0);
                 pos--;
@@ -28,18 +30,18 @@ public class PlayerControlledMovement : MonoBehaviour
 
     void Start()
     {
+        playerController = gameObject.GetComponent<PlayerController>();
         defaultVerticalPosition = transform.position.y;
-        {
-            
-            float jumpParam = gameSettings.jumpHeight * 2 * gameSettings.gravity;
-            
-            jumpSpeed = (float)System.Math.Pow(jumpParam, 0.5);
-        }
     }
     public void OnJump()
     {
         if (!isJumping) {
-            isJumping = true;
+            isJumping = true;        {
+            
+            float jumpParam = (gameSettings.jumpHeight + (playerController.jumpIsBuffed ? gameSettings.jumpBuffHeight : 0)) * 2 * gameSettings.gravity;
+            
+            jumpSpeed = (float)System.Math.Pow(jumpParam, 0.5);
+        }
             currentVerticalSpeed = jumpSpeed;
         }
     }

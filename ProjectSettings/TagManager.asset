@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Shade
   - Spawner
+  - Spawn Button
+  - High Score
+  - InGameUI
   layers:
   - Default
   - TransparentFX
